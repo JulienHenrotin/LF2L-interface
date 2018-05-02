@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/publication', function () {
+    return view('publication/new_publication');
+});
+Route::get('/these', function () {
+    return view('publication/new_these');
+});
