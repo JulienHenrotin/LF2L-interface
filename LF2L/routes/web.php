@@ -20,3 +20,10 @@ Route::get('/publication', function () {
 Route::get('/these', function () {
     return view('publication/new_these');
 });
+
+
+Route::get('/vulgarisation', 'vulgarisationController@affichage');
+Route::post('/vulgarisation','vulgarisation@traitement');
+
+Route::get('/creationProjet','creationProjet@affichage');
+Route::post('/creationProjet','creationProjet@traitement');
