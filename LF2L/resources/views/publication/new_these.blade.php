@@ -1,3 +1,4 @@
+<?php header("Access-Control-Allow-Origin: *"); ?>
 <!DOCTYPE html>
 <html>
 <title>W3.CSS</title>
@@ -74,10 +75,6 @@
             xhttp.open("GET", "http://localhost/LF2L-interface2/LF2L/resources/views/test.blade.php?prenom="+prenom, true);
             xhttp.send();
     }
-
-
-
-
 
     function myFunction() {
         var x = document.getElementById("demo");
