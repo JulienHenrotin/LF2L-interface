@@ -1,4 +1,3 @@
-<?php header("Access-Control-Allow-Origin: *"); ?>
 <!DOCTYPE html>
 <html>
 <title>W3.CSS</title>
@@ -57,7 +56,8 @@
         <p>Prénom juré : </p>
         <input class="w3-input w3-border w3-round-xxlarge" name="prenom_jure">
         <input type="button" onclick="ajout_jure(prenom_jure.value)">
-        <div id="truc">aaaaa</div>
+        <div id="truc"><p>aaaaa</p></div>
+
 
     </form>
 
@@ -66,15 +66,41 @@
 
 <script >
     function ajout_jure(prenom) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("truc").innerHTML += this.responseText;
+        var xhttp;
+        var obj;
+        //var a = 0;
+        var div = document.getElementById("truc");
+        var a = div.getElementsByTagName("p");
+        if (prenom.length == 0) {
+            document.getElementById("txtHint").innerHTML = "";
+            return;
+        }
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("truc").innerHTML += this.responseText;
             }
-            };
-            xhttp.open("GET", "http://localhost/LF2L-interface2/LF2L/resources/views/test.blade.php?prenom="+prenom, true);
-            xhttp.send();
+
+        };
+
+        xhttp.open("GET", "http://localhost/LF2L-interface2/LF2L/resources/views/new_jure.blade.php?prenom="+prenom+"&nb="+a.length, true);
+        xhttp.send();
+
     }
+
+    function supp_jure(num_jure) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById(num_jure).innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "http://localhost/LF2L-interface2/LF2L/resources/views/supp_jure.blade.php", true);
+        xhttp.send();
+
+    }
+
+
 
     function myFunction() {
         var x = document.getElementById("demo");

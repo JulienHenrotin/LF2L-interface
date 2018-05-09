@@ -27,3 +27,6 @@ Route::post('/vulgarisation','vulgarisation@traitement');
 
 Route::get('/creationProjet','creationProjet@affichage');
 Route::post('/creationProjet','creationProjet@traitement');
+
+Route::get('/detailProjet','detailProjetController@affichage');
+//Route::post('/detailProjet','detailProjetController@traitement');
