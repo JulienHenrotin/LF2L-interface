@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class editeur_journal extends Model
+class publication extends Model
 {
+    protected $table='publication';
     //
 }
