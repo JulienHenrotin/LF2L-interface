@@ -10,4 +10,12 @@ class creationProjet extends Controller
     {
         return view ('projet\creationProjet');
     }
+    function traitement()
+    {
+        $projet=new App\projet;
+        $projet ->nom_projet = request('titre');
+        $projet->date_lancement_projet = request('date');
+        $projet->save();
+        return view('welcome');
+    }
 }
