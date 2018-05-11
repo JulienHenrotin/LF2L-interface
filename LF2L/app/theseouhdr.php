@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class conference extends Model
+class theseouhdr extends Model
 {
-    //
+    protected $table='theseouhdr';
+
 }
