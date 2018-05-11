@@ -1,5 +1,5 @@
 <?php
-//    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Origin: *");
 ?>
         <!DOCTYPE html>
 <html>
@@ -61,6 +61,7 @@
         <div id="truc">
             <p> ligne vide </p>
         </div>
+        <button type="submit" method=post class="w3-button w3-btn w3-round-xxlarge w3-margin w3-green w3-hover-purple"> Créer le projet </button>
     </form>
 </div>
 </div>

@@ -8,6 +8,10 @@ class detailProjetController extends Controller
 {
     function affichage()
     {
-        return view("projet/detailProjet");
+        $resources = \App\resources::all();
+
+        return view("projet/detailProjet", [
+            'resources'=>$resources,
+        ]);
     }
 }

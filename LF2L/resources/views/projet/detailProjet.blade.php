@@ -1,21 +1,33 @@
-<!DOCTYPE html>
+<?php
+header("Access-Control-Allow-Origin: *");
+
+?>
+
+
+        <!DOCTYPE html>
 <html>
 <title>W3.CSS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../lib/w3.css">
-{{--{!! HTML::script('LF2L/public/js/detailProjet.js'); !!}--}}
-{{--<script type="text/javascript" src="../../../public/js/detailProjet.js"></script>--}}
-<script type="text/javascript" src="{{ URL::asset('js/detailProjet.js') }}"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+<div class="w3-row-padding">
+    <div class="w3-half">
+        <div id="main" class="w3-container">
+            <h2>Détails du projet</h2>
+            <p>C'est ici que vous construisez les étapes de votre projets</p>
 
-<body class="w3-container">
-
-<div class="w3-accordion w3-light-grey">
-    <button onclick="myFunction('Demo1')" class="w3-btn-block w3-left-align">Accordion</button>
-    <div id="Demo1" class="w3-accordion-content w3-animate-zoom">
-        <a href="tryit.asp-filename=tryw3css_accordion_animate.html#">Link 1</a>
-        <a href="tryit.asp-filename=tryw3css_accordion_animate.html#">Link 2</a>
-        <a href="tryit.asp-filename=tryw3css_accordion_animate.html#">Link 3</a>
+            <button onclick="myFunction('Demo1')" class="w3-btn w3-block w3-black w3-left-align">Activité 1</button>
+            <div id="Demo1" class="w3-container w3-hide">
+                <p>Some text..</p>
+                <button class="w3-button w3-round w3-margin w3-blue w3-hover-purple" onclick="ajoutAct({{$resources}})">Sauvegarder
+                    l'activité
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 </body>
+<script type="text/javascript" src="{{ URL::asset('js/detailProjet.js') }}"></script>
 </html>
+
+
