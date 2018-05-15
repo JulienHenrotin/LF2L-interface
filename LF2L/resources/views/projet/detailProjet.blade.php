@@ -1,6 +1,16 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-
+//$listnomresource = array();
+//foreach ($resources as $resource) {
+//    array_push($listnomresource, $resource->type);
+//}
+//print_r($listnomresource);
+$tables = \App\resources::all();
+$resources = "  ";
+foreach ($tables as $table) {
+    $resources = $resources . $table->type . ";";
+}
+echo $resources;
 ?>
 
 
@@ -19,8 +29,8 @@ header("Access-Control-Allow-Origin: *");
             <button onclick="myFunction('Demo1')" class="w3-btn w3-block w3-black w3-left-align">Activité 1</button>
             <div id="Demo1" class="w3-container w3-hide">
                 <p>Some text..</p>
-                <button class="w3-button w3-round w3-margin w3-blue w3-hover-purple" onclick="ajoutAct({{$resources}})">Sauvegarder
-                    l'activité
+                <button class="w3-button w3-round w3-margin w3-blue w3-hover-purple"
+                        onclick="ajoutAct('{{$resources}}')">Sauvegarder l'activité
                 </button>
             </div>
         </div>

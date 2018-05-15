@@ -1,8 +1,10 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-        $ressource = $_GET['ressource'];
-        echo "<p> " . $_GET['ressource'] . "<button class='w3-button w3-xlarge w3-circle w3-red' type='button' ><i class='fa fa-close'></i></button></p>";
-        ?>
+$ressource = $_GET['ressource'];
+$leID = $_GET['leID'];?>
 
-<!--id={$a}>
-onclick='supp_jure({$a})'-->
+<p1 id='<?php echo $leID; ?>'>
+    <?php echo $ressource; ?>
+    <button  class='w3-button w3-circle w3-red' type='button' onclick='suppre_resource("<?php echo $leID; ?>",this.parentNode.getAttribute("id"))'><i class='fa fa-close'></i>Supprimer</button><br>
+</p1>
+

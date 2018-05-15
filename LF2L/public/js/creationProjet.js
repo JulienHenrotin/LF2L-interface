@@ -32,7 +32,7 @@ function suppre_finance(leID) {
     xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/vide.blade.php", true);
     xhttp.send();
 
-    console.log(leID);
+    console.log("ca supprime");
     // var parent = document.body;
     // var aSupre = document.getElementById(leID);
     // parent.removeChild(aSupre);
