@@ -13,6 +13,13 @@ foreach ($tablesP as $tableP)
         $personne = $personne . $tableP->Nom . " ";
         $personne = $personne . $tableP->prenom . ";";
     }
+
+$tableTache = \App\taches::all();
+$tache= "";
+foreach ($tableTache as $tache1)
+{
+    $tache = $tache . $tache1->nom_tache . ";";
+}
 ?>
 
 
@@ -37,7 +44,6 @@ foreach ($tablesP as $tableP)
                             Resources
                         </button>
                         <div id='300'
-                             {{--probleme avec id 1 --}}
                              class='w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom'>
 
                             <?php foreach ($tables as $table): ?>
@@ -54,7 +60,7 @@ foreach ($tablesP as $tableP)
                     </div>
                 </div>
                 <button class="w3-button w3-round w3-margin w3-blue w3-hover-purple"
-                        onclick="ajoutAct('{{$resources}}','{{$personne}}')">Sauvegarder l'activité
+                        onclick="ajoutAct('{{$resources}}','{{$personne}}', '{{$tache}}')">Sauvegarder l'activité
                 </button>
             </div>
         </div>

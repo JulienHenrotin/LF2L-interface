@@ -1,5 +1,5 @@
 console.log("script lancé deuis le fichier JS");
-var tableau = new Object();
+var verifFinance =[];
 
 function ajout_financement(source) {
     var xhttp = new XMLHttpRequest();
@@ -11,14 +11,25 @@ function ajout_financement(source) {
             console.log("sa passe");
         }
     };
+
+    //======VERIF QU IL Y AI PAS 2 FOIS LA MEME CHOSE
+    if(verifFinance.indexOf(source) == -1)
+    {
+        verifFinance.push(source);
+        console.log("=======================");
+        console.log("tableau des sources  --> " + verifFinance);
+        console.log("=======================");
+    }
+    else
+    {
+        alert("vous en pouvez pas ajouter deux fois la meme source de financement pour un même projet ! ");
+        return;
+    }
+    console.log("=======================");
+    console.log("tableau des resources --> " + verifFinance);
+    console.log("=======================");
+
     xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/tempCreationProjet.blade.php?source="+source+"&leID="+a.length, true);
-    // leID=" + a.length
-
-    tableau[source]= 999;
-    // for(var i in tableau)
-    // {
-        console.log(tableau['source 1']);
-
     xhttp.send();
 }
 
@@ -29,15 +40,23 @@ function suppre_finance(leID) {
             document.getElementById(leID).innerHTML = this.responseText;
         }
     };
+    var trouver =document.getElementById(leID).innerText;
+    console.log("=======================");
+    console.log("tableau financement --> " + verifFinance);
+    console.log("=======================");
+    console.log(trouver);
+    var re = /(.*?) /;
+    var resulte = trouver.match(re);
+    verifFinance.splice(resulte[1],1);
+    console.log("=======================");
+    console.log("tableau des financement --> " + verifFinance);
+    console.log("=======================");
+
+
     xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/vide.blade.php", true);
     xhttp.send();
 
     console.log("ca supprime");
-    // var parent = document.body;
-    // var aSupre = document.getElementById(leID);
-    // parent.removeChild(aSupre);
-    // var selectTag=document.getElementById('truc');
-    // selectTag[leID].parentNode.removeChild(selectTag[leID]);
 }
 
 function myFunction() {

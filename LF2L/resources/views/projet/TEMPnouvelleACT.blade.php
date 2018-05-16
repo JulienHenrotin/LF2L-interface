@@ -1,18 +1,19 @@
 <?php
-//namespace app;
-//use LF2L\app\resources;
-
 header("Access-Control-Allow-Origin: *");
 $compteur = $_GET['compteur'];
 $compteur1 = $_GET['compteur1'];
 $compteurResourceCarre = $_GET['compteurResourceCarre'];
 $compteurPersonneCarre = $_GET['compteurPersonneCarre'];
+$compteurTacheCarre = $_GET['compteurTacheCarre'];
+$compteurTache = $_GET['compteurTache'];
 $cpersonne = $_GET['cpersonne'];
 $resources = $_GET['resources'];
 $personnes = $_GET['personne'];
+$taches = $_GET['tache'];
 $pattern_resources = "#(.*?);#";
 preg_match_all($pattern_resources, $resources, $matches_resources);
 preg_match_all($pattern_resources , $personnes , $match_personnes);
+preg_match_all($pattern_resources , $taches , $match_taches);
 ?>
 
 
@@ -24,7 +25,6 @@ preg_match_all($pattern_resources , $personnes , $match_personnes);
             <p>Parametre de l'activité</p>
             <input class="w3-input w3-border w3-round-large" type="text" placeholder="nom de l'activité">
             <br>
-
 
             <div class='w3-container'>
                 <div class='w3-dropdown-click'>
@@ -72,14 +72,39 @@ preg_match_all($pattern_resources , $personnes , $match_personnes);
                     </div>
                 </div>
             </div>
+            <!-- ======================================================================================
+            ===================== AJOUT TACHES ================================================-->
+                <!-- ====================================================== -->
 
 
+                <div class='w3-container'>
+                    <div class='w3-dropdown-click'>
+                        <button onclick='myFunctiondropbox(<?php echo $compteurTache; ?>)' class='w3-button w3-black'>
+                            Taches de l'activité
+                        </button>
+                        <div id='<?php echo $compteurTache; ?>'
+                             class='w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom'>
+                            <?php foreach ($match_taches[1] as $match): ?>
+                            <a class='<?php echo $compteurTacheCarre ?> w3-bar-item w3-button'
+                               onclick="ajoutRessource('<?php echo $match;?>' , recupID(this.getAttribute('class')))"><?php echo $match;?> </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class='w3-container'>
+                        <div id='<?php echo $compteurTacheCarre ?>'
+                             class="w3-panel w3-white w3-topbar w3-bottombar w3-border-amber">
+                            <p>Liste de ressources</p>
+                        </div>
+                    </div>
+                </div>
 
 
             <br>
             <button class='w3-button w3-round w3-margin w3-blue w3-hover-purple'
                     onclick='ajoutAct("<?php echo $resources ?>")'>Sauvegarder l'activité
             </button>
+
+
         </div>
     </div>
 </div>

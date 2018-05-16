@@ -6,6 +6,13 @@ var compteurPersonneCarre=201;
 var cpersonne = 401;
 var averifresource = [];
 var averifPersonne = [];
+var averifTache = [];
+var compteurTacheCarre = 601;
+var compteurTache = 701;
+
+// les ID de depart définis avec les compteurs ont une valeur arbitraire -> peu poser probleme si on ajoute
+// BEAUCOUP d'éléments pour un meme groupe (personnes, resources , taches)
+
 
 function myFunction(id) {
     console.log("menu deployant -> " +id);
@@ -27,7 +34,7 @@ function myFunctiondropbox(id)
         x.className = x.className.replace(" w3-show", "");
     }
 }
-function ajoutAct(resources , personnes) {
+function ajoutAct(resources , personnes , tache) {
     console.log("les personnse envoyés sont -> "+personnes);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -40,8 +47,12 @@ function ajoutAct(resources , personnes) {
     compteurResourceCarre=compteurResourceCarre+1;
     compteurPersonneCarre= compteurPersonneCarre+1;
      cpersonne = cpersonne+1;
+     compteurTacheCarre = compteurTacheCarre +1;
+     compteurTache = compteurTache +1;
     xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/TEMPnouvelleACT.blade.php?compteur="+compteur+"&compteur1="+compteur1+"&compteurResourceCarre="+compteurResourceCarre+"&resources="+resources
-        +"&compteurPersonneCarre="+compteurPersonneCarre+"&cpersonne="+cpersonne+"&personne="+personnes, true);
+        +"&compteurPersonneCarre="+compteurPersonneCarre+"&cpersonne="+cpersonne+"&personne="+personnes
+        +"&compteurTacheCarre="+compteurTacheCarre+"&compteurTache="+compteurTache+"&tache="+tache
+        , true);
     xhttp.send();
 }
 
@@ -149,6 +160,59 @@ function suppre_personne(leID) {
     console.log("reultat -> "+resulte[1])
     averifPersonne.splice(resulte[1],1);
     console.log("tableau clean -> "+averifPersonne);
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById(String(leID)).innerHTML = this.responseText;
+        }
+    };
+    xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/vide.blade.php", true);
+    xhttp.send();
+
+    console.log("ca supprime -> "+String(leID));
+}
+
+//======================================================================
+//======== GESTION DES TACHES DE L ACTIVITE ============================
+
+function  ajoutTache(ressource , value) {
+    var xhttp = new XMLHttpRequest();
+    var a = document.getElementsByTagName("p1");
+
+    //======VERIF QU IL Y AI PAS 2 FOIS LA MEME CHOSE
+    if(averifTache.indexOf(ressource) == -1)
+    {
+        averifTache.push(ressource);
+        console.log("verif ok");
+    }
+    else
+    {
+        console.log("verif"+averifTache.indexOf(ressource));
+        alert("Vous en pouvez pas ajouter deux fois la meme tache dans une même activité ! ");
+        return;
+    }
+    console.log("=======================");
+    console.log("tableau des taches --> " + averifTache );
+    console.log("=======================");
+    //=========================================
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById(String(value)).innerHTML += this.responseText;
+        }
+    };
+    xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/TEMPtache.blade.php?ressource="+ressource+"&leID="+a.length+2 , true);
+    xhttp.send();
+}
+
+function suppre_tache(leID) {
+    var trouver =document.getElementById(leID).innerText;
+    console.log("premier tableau -> "+averifTache);
+    console.log(trouver);
+    var re = /(.*?) /;
+    var resulte = trouver.match(re);
+    console.log("reultat -> "+resulte[1])
+    averifTache.splice(resulte[1],1);
+    console.log("tableau clean -> "+averifTache);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {

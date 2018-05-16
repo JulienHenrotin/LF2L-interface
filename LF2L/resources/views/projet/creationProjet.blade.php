@@ -1,10 +1,11 @@
 <?php
-    header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: *");
+$financements = \App\parti_prenant::all();
 ?>
         <!DOCTYPE html>
 <html>
 <head>
-    <title>W3.CSS</title>
+    <link rel="shortcut icon" href="LF2L/public/image/favicon.ico" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -45,12 +46,10 @@
 
         <p>Source de financement : </p>
         <select class="w3-select w3-border" name="optionFinancement">
-
             <option value="" disabled selected>Nom de l'établissement</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-
+            <?php foreach ($financements as $financement ): ?>
+            <a class='w3-bar-item w3-button' onclick="ajout_financement('<?php echo $financement->nom_source;?>')"><?php echo $financement->nom_source;?> </a>
+            <?php endforeach; ?>
         </select>
         <div id="ajout">
             <button type="button" onclick="ajout_financement(optionFinancement.value)"
@@ -58,10 +57,10 @@
                 Ajouter source de financement
             </button>
         </div>
-        <div id="truc">
-            <p> ligne vide </p>
-        </div>
-        <button type="submit" method=post class="w3-button w3-btn w3-round-xxlarge w3-margin w3-green w3-hover-purple"> Créer le projet </button>
+        <div id="truc"></div>
+        <button type="submit" method=post class="w3-button w3-btn w3-round-xxlarge w3-margin w3-green w3-hover-purple">
+            Créer le projet
+        </button>
     </form>
 </div>
 </div>
