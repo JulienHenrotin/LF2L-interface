@@ -8,11 +8,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 <body>
 <div class="w3-row-padding">
 <div class="w3-half">
 
-    <form  action="envoie" id="personneForm">
+    <form  action="http://localhost/LF2L-interface/LF2L/public/personne/envoie" id="personneForm">
         {{ csrf_field() }}
 
 
@@ -20,9 +21,9 @@
         <p><input class="w3-input w3-border w3-round-large" type="text" name="nom"></p>
             <p>Personne :</p>
         <p><input class="w3-input w3-border w3-round-large" type="text" name="prénom"></p>
-            <p>Couriel :</p>
+            <p>Mail :</p>
         <p><input class="w3-input w3-border w3-round-large" type="text" name="mail"></p>
-        <select id="responsable" onchange="affiche_role(value)">
+        <select id="role_personne" onchange="affiche_role(value)">
             <option value="role">Role</option>
             <option value="permanent">Permanent</option>
             <option value='etudiant'>Etudiant</option>
@@ -48,8 +49,17 @@
     <div id="etudiant">
             <p>Etablissement :</p>
         <p><input class="w3-input w3-border w3-round-large" type="text" name="Etablissement"></p>
-            <p>Niveau :</p>
-        <p><input class="w3-input w3-border w3-round-large" type="text" name="Niveau"></p>
+        <select id="niveau">
+            <option value="niveau">niveau</option>
+            <option value="primaire">primaire</option>
+            <option value='college'>college</option>
+            <option value='lycee'>lycee</option>
+            <option value='L1'>L1</option>
+            <option value='L2'>L2</option>
+            <option value='L3' >L3</option>
+            <option value='M1' >M1</option>
+            <option value='M2' >M2</option>
+        </select>
     </div>
 
     <div id="externe">
@@ -80,7 +90,7 @@
         </div>
         <div id="enseignant_chercheur_labo">
             <p>Nom du labo</p>
-            <p><input class="w3-input w3-border w3-round-large" type="text" name="Organisation"></p>
+            <p><input class="w3-input w3-border w3-round-large" type="text" name="labo_ec"></p>
             <p>
                 <input id="chbx_EC_labo_interne" class="w3-check" type="checkbox" onchange="check('chbx_EC_labo_interne','chbx_EC__labo_externe')">
                 <label>Labo Interne</label>
@@ -94,7 +104,7 @@
     </div>
     <div id="doctorant">
         <p>Etablissement :</p>
-        <p><input class="w3-input w3-border w3-round-large" type="text" name="Etablissement"></p>
+        <p><input class="w3-input w3-border w3-round-large" type="text" name="Etablissement_doc"></p>
         <p>Debut du contrat :</p>
         <p><input class="w3-input w3-border w3-round-large" type="text" name="debut_contrat"></p>
         <p>Fin du contrat :</p>
@@ -119,7 +129,7 @@
                     ?>
         </select>
         <p>Nom du labo</p>
-        <p><input class="w3-input w3-border w3-round-large" type="text" name="Organisation"></p>
+        <p><input class="w3-input w3-border w3-round-large" type="text" name="labo_doc"></p>
         <p>
             <input id="chbx_labo_interne" class="w3-check" type="checkbox" onchange="check('chbx_labo_interne','chbx_labo_externe')">
             <label>Labo Interne</label>
@@ -210,26 +220,69 @@ function check(chbx,chbx2) {
 
 
 }
+function verif_check(nom_chbx){
+    console.log(nom_chbx)
+    var x = '0';
+    var chbx = document.getElementById(nom_chbx);
+
+    if(chbx.checked){
+        x='1'
+    }
+    return x
+}
 $('#personneForm').submit(function(event) {
 
     // Stop la propagation par défaut
     event.preventDefault();
 
     // Récupération des valeurs
+    var inge = verif_check('inge')
+    var tech = verif_check('tech')
+    var chbx_EC_off = verif_check('chbx_EC_off')
+    var chbx_EC_on = verif_check('chbx_EC_on')
+    var chbx_EC_labo_on = verif_check('chbx_EC_labo_on')
+    var chbx_EC_labo_off = verif_check('chbx_EC_labo_off')
+    var chbx_EC_labo_interne = verif_check('chbx_EC_labo_interne')
+    var chbx_EC_labo_externe = verif_check('chbx_EC__labo_externe')
+    var chbx_labo_interne = verif_check('chbx_labo_interne')
+    var chbx_labo_externe = verif_check('chbx_labo_externe')
+    var chbx_CIFRE = verif_check('chbx_CIFRE')
+    var chbx_MESNR = verif_check('chbx_MESNR')
+
+    var role = document.getElementById('role_personne').value
+    var Niveau = document.getElementById('niveau').value
+    console.log(role)
     var $form = $(this),
-        term1 = $form.find( "input[name='nom']" ).val(),
-        term2 = $form.find( "input[name='prénom']" ).val(),
-        term3 = $form.find( "input[name='mail']" ).val(),
+
+        nom = $form.find( "input[name='nom']" ).val(),
+        token = $form.find( "input[name='_token']" ).val(),
+        prenom = $form.find( "input[name='prénom']" ).val(),
+        mail = $form.find( "input[name='mail']" ).val(),
+        Etablissement = $form.find( "input[name='Etablissement']" ).val(),
+
+        Organisation = $form.find( "input[name='Organisation']" ).val(),
+        labo_ec = $form.find( "input[name='labo_ec']" ).val(),
+        Etablissement_doc = $form.find( "input[name='Etablissement_doc']" ).val(),
+        debut_contrat = $form.find( "input[name='debut_contrat']" ).val(),
+        fin_contrat = $form.find( "input[name='fin_contrat']" ).val(),
+        labo_doc = $form.find( "input[name='labo_doc']" ).val(),
+        entreprise = $form.find( "input[name='entreprise']" ).val(),
 
         url = $form.attr( "action" );
 
     // Envoie des données
-    $.post( url, { s: term1 });
-    // Reception des données et affichage
+    $.post( url,{'_token': token,'nom':nom,'prenom':prenom,'mail':mail,'inge':inge,'tech':tech,'role':role,'entreprise':entreprise,
+        'labo_doc':labo_doc,'fin_contrat':fin_contrat,'debut_contrat':debut_contrat,'Etablissement_doc':Etablissement_doc,
+        'labo_ec':labo_ec,'Organisation':Organisation,'Niveau':Niveau,'Etablissement':Etablissement,'chbx_MESNR':chbx_MESNR,
+        'chbx_CIFRE':chbx_CIFRE,'chbx_labo_externe':chbx_labo_externe,'chbx_labo_interne':chbx_labo_interne,
+        'chbx_EC_labo_externe':chbx_EC_labo_externe,'chbx_EC_labo_interne':chbx_EC_labo_interne,'chbx_EC_labo_on':chbx_EC_labo_on,
+        'chbx_EC_on':chbx_EC_on,'chbx_EC_off':chbx_EC_off,'chbx_EC_labo_off':chbx_EC_labo_off})
+    .done(function() {
+        //window.location.replace('http://localhost/LF2L-interface/LF2L/public/personne/envoie')
+    });
 
 
-
-})
+});
 
 </script>
 <script>hide_all()</script>
