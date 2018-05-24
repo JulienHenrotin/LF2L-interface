@@ -31,5 +31,9 @@ class welcome extends Controller
         {
             return redirect('creationProjet');
         }
+        if(Input::get('login'))
+        {
+            return redirect('login');
+        }
     }
 }

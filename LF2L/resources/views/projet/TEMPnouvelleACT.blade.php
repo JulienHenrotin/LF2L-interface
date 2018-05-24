@@ -14,6 +14,9 @@ $pattern_resources = "#(.*?);#";
 preg_match_all($pattern_resources, $resources, $matches_resources);
 preg_match_all($pattern_resources , $personnes , $match_personnes);
 preg_match_all($pattern_resources , $taches , $match_taches);
+//recuperation des compteur pour attribuer les ID au éléments
+// les infos venant de la bdd sont sous forme de string
+// utilisations d'expressions régulieres permet de retrouver les infos souhaitées
 ?>
 
 
@@ -102,6 +105,7 @@ preg_match_all($pattern_resources , $taches , $match_taches);
             <br>
             <button class='w3-button w3-round w3-margin w3-blue w3-hover-purple'
                     onclick='ajoutAct("<?php echo $resources ?>")'>Sauvegarder l'activité
+                {{--a completer pas tout les parametre dans la fonction --}}
             </button>
 
 
