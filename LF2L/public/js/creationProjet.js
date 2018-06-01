@@ -15,7 +15,6 @@ function ajout_financement(source) {
         if (this.readyState == 4 && this.status == 200) {
             //ajoute ce que l'utilisateur a selectionner
             document.getElementById("truc").innerHTML += this.responseText;
-            console.log("sa passe");
         }
     };
 
@@ -41,9 +40,12 @@ function suppre_finance(leID) {
         }
     };
     var trouver = document.getElementById(leID).innerText;
-        var re = /(.*?) /;
+    var re = /(.*?) /;
     var resulte = trouver.match(re);
+    var resulte1 = resulte[1];
     verifFinance.splice(resulte[1], 1);
+    delete argent[resulte1];
+    console.log(argent);
     xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/vide.blade.php", true);
     xhttp.send();
 }
@@ -60,9 +62,9 @@ function myFunction() {
 
 function myFunctiondropbox(id) {
     //fonction qui vient de W3school -> anime les dropbox
-    console.log("dropboxe -> " + id);
+
     var x = document.getElementById(id);
-    console.log(x);
+
     if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
     } else {
@@ -74,46 +76,30 @@ function myFunctiondropbox(id) {
 function ajoutArgent(value, source) {
     // quand l'utilisateur ecris un montant de financement
     // --> ajoute dans le tableau la somme correspondant à la source
-    console.log("valeur est  " + value + "et le source est : " + source);
-    argent[source] = value;
+    var nomSource = document.getElementById(source).innerText;
+    var re = /(.*?)_/;
+    var resulte = nomSource.match(re);
+console.log("======"+argent);
+    console.log("valeur est  " + value + "et le source est : " + resulte[1]);
+    argent[resulte[1]] = value;
     console.log(argent);
 }
 
-// function envoi() {
-//     console.log('post a la main');
-//
-//     $.post('http://lf2l/detailProjet', {'_token': ,'argent': 'plein'}), function () {
-//         console.log("envoi");
-//     }
-//         .done(function () { // essayer de metre une pause
-//             window.locatiwon.replace('http://lf2l/detailProjet');
-//         });
-// }
 
+function traitementArgent() {
+    var argentString = ""
+    for (var key in argent) {
+        console.log("argent --->  " + argentString)
+        argentString = argentString + key + "," + argent[key] + ";"
+    }
+    var select = document.getElementById('formulaire');
 
-$('#formulaire').submit(function (event) {
-    // Stop la propagation par défaut
-    console.log("post a la main");
-    // var total = "";
-    // for (var indice in argent)
-    //     total = total + indice+","+argent[indice]+";"
-    // console.log(argent);
+    var ajout = "{{csrf_field()}} <input type='hidden' value='" + argentString + "' name='argentcache' form='formulaire'>";
+    select.insertAdjacentHTML('beforeend', "{{csrf_field()}} <input type='hidden' value='" + argentString + "' name='argentcache' form='formulaire'>");
+    select.submit();
 
+    select = document.getElementById('formulaire');
+    console.log(select);
+}
 
-    event.preventDefault();
-    // Récupération des valeurs qui sot pas dans le formulaire
-
-    var $form = $(this),
-        nom = $form.find("input[name='titre']").val(),
-        token = $form.find("input[name='_token']").val(),
-        date_pu = $form.find("input[name='date_pu']").val(),
-
-        url = $form.attr("action");
-    // Envoie des données
-    $.post(url, {'_token': token, 'nom': nom, 'date_pu': date_pu, 'argent': 'super'})
-        .done(function () {
-            //window.location.replace('http://localhost/LF2L-interface/LF2L/public/personne/detailProjet')
-            //voir si pas imcomplet l'URL
-        });
-});
 

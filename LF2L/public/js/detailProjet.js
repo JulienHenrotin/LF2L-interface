@@ -98,7 +98,6 @@ function ajoutRessource(ressource, value) {
     xhttp.send();
 }
 
-
 function ajoutPersonne(ressource, value) {
     var xhttp = new XMLHttpRequest();
     var a = document.getElementsByTagName("p1");

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Database\Eloquent\Model;
@@ -15,25 +17,24 @@ class welcome extends Controller
 
     function reponse()
     {
-        if(Input::get('Listedenosprojet'))
-        {
+        if (Input::get('Listedenosprojet')) {
             return redirect('nosProjet');
         }
-        if(Input::get('Listedesproduits'))
-        {
+        if (Input::get('Listedesproduits')) {
             return redirect('listeProduits');
         }
-        if(Input::get('Mesprojets'))
-        {
+        if (Input::get('Mesprojets')) {
             return redirect('mesProjets');
         }
-        if(Input::get('Creerunprojet'))
-        {
+        if (Input::get('Creerunprojet')) {
             return redirect('creationProjet');
         }
-        if(Input::get('login'))
-        {
+        if (Input::get('login')) {
             return redirect('login');
+        }
+        if (Input::get('logout')) {
+            Session::flush();
+            return redirect('/');
         }
     }
 }

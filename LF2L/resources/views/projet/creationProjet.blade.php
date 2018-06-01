@@ -24,19 +24,20 @@ header("Access-Control-Allow-Origin: *");
     <div class="w3-container">
         <h2>Création d'un nouveau projet</h2>
     </div>
-    <form method="post" id="formulaire" action="http://localhost/LF2L-interface/LF2L/public/projet/detailProjet">
-        {{ csrf_field() }} <!-- token de sécurité imposé par laravel pour les formulaires-->
+    <form method="post" id="formulaire" action="http://lf2l/creationProjet" name="formulaire">
+    {{ csrf_field() }} <!-- token de sécurité imposé par laravel pour les formulaires-->
         <p>Nom du projet : </p>
         <input class="w3-input w3-border w3-round-xxlarge" name="titre">
 
         <p>Date de lancement du projet : </p>
         <input class="w3-input w3-border w3-round-xxlarge" type="date" name="date_pu">
+
+        <p>Source de financement : </p>
+
     </form>
-    <p>Source de financement : </p>
+
     <div class='w3-dropdown-click'>
-        <button onclick='myFunctiondropbox("conteneur")' class='w3-button w3-black' id="drop">
-            Sources
-        </button>
+
         <div id='conteneur' class='w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom'>
             <!-- lis la BDD pour afficher les source de financement déja connues -->
             <?php foreach ($financements as $financement ): ?>
@@ -44,12 +45,20 @@ header("Access-Control-Allow-Origin: *");
                onclick="ajout_financement('<?php echo $financement->nom_source;?>')"><?php echo $financement->nom_source;?> </a>
             <?php endforeach; ?>
         </div>
+
     </div>
+
+    <button onclick='myFunctiondropbox("conteneur")' class='w3-button w3-black' id="drop">
+        Sources
+    </button>
+
     <div id="truc"></div>
-    <input type="submit" class="w3-button w3-btn w3-round-xxlarge w3-margin w3-green w3-hover-purple"
-           value="Créer le projet">
+    <input onclick="traitementArgent()" type="submit" class="w3-button w3-btn w3-round-xxlarge w3-margin w3-green w3-hover-purple"
+           value="Créer le projet" form="formulaire">
+
 </div>
 </div>
 <div class="w3-col" style="width:20%"><p></p></div>
 </body>
+
 </html>

@@ -23,7 +23,6 @@ foreach ($tableTache as $tache1)
     $tache = $tache . $tache1->nom_tache . ";";
 }
 
-dd($_POST['argent']);
 ?>
 
 
