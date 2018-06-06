@@ -1,0 +1,59 @@
+<title>W3.CSS</title>
+<html >
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<body >
+@include('header')
+<div style="padding-left: 5%">
+<?php
+        foreach ($publications as $publication){
+            echo "<div class='w3-panel w3-border-bottom w3-border-purple'>";
+            echo "<a href='https://hal.archives-ouvertes.fr/".$publication ->identifiant ."'target='_blank'>".$publication -> titre_article."</a><br>";
+            //echo $publication -> domaine_article."<br>";
+            echo $publication -> date_publication."<br>";
+            echo $publication -> langue_article."<br>";
+            foreach ($prepublications as $prepublication){
+                if($prepublication -> id_article == $publication -> id_article){
+                    echo "Prepublication<br>";
+                }
+            }
+
+            foreach ($rapports as $rapport){
+                if($rapport -> id_article == $publication -> id_article){
+                    echo "Rapport<br>";
+                }
+            }
+
+            foreach ($articles_publication_presse as $article_publication_presse){
+                if($article_publication_presse -> id_article == $publication -> id_article){
+                    echo "Article/Publication dans la presse<br>";
+                }
+            }
+
+            foreach ($liste_hdr as $hdr){
+                if($hdr -> id_article == $publication -> id_article){
+                    echo "HDR<br>";
+                }
+            }
+
+            foreach ($theses as $these){
+                if($these -> id_article == $publication -> id_article){
+                    echo "These<br>";
+                }
+            }
+
+            foreach ($publications_conference as $publication_conference){
+                if($publication_conference -> id_article == $publication -> id_article){
+                    echo "Publication/Poster dans une conference<br>";
+                }
+            }
+            echo "<br>";
+            echo "</div>";
+        }
+        ?>
+</div>
+@include('footer')
+</body>
+</html>

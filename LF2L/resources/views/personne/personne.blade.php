@@ -65,39 +65,26 @@
     <div id="externe">
         <p>Organisation :</p>
         <p><input class="w3-input w3-border w3-round-large" type="text" name="Organisation"></p>
+        <p>Statut :</p>
+        <p><input class="w3-input w3-border w3-round-large" type="text" name="Statut"></p>
     </div>
 
 
 
     <div id="enseignant_chercheur">
-        <div id="enseignant_chercheur_chbx" class="w3-gray">
-        <p>
-            <input id="chbx_EC_off" class="w3-check" type="checkbox" onchange="hide('enseignant_chercheur_labo_chbx','chbx_EC_off','chbx_EC_on')">
-            <label>Interne</label>
 
-            <input id="chbx_EC_on" class="w3-check" type="checkbox" onchange="affiche('enseignant_chercheur_labo_chbx','chbx_EC_on','chbx_EC_off')">
-            <label>Externe</label>
-        </p>
-        </div>
         <div id="enseignant_chercheur_labo_chbx" class="w3-gray" >
             <p>
-                <input id="chbx_EC_labo_off" class="w3-check" type="checkbox" onchange="hide('enseignant_chercheur_labo','chbx_EC_labo_off','chbx_EC_labo_on')">
+                <input id="chbx_EC_labo_interne" class="w3-check" type="checkbox" onchange="hide('enseignant_chercheur_labo','chbx_EC_labo_interne','chbx_EC_labo_externe')">
                 <label>EC Interne</label>
 
-                <input id="chbx_EC_labo_on" class="w3-check" type="checkbox" onchange="affiche('enseignant_chercheur_labo','chbx_EC_labo_on','chbx_EC_labo_off')">
+                <input id="chbx_EC_labo_externe" class="w3-check" type="checkbox" onchange="affiche('enseignant_chercheur_labo','chbx_EC_labo_externe','chbx_EC_labo_interne')">
                 <label>EC Externe</label>
             </p>
         </div>
         <div id="enseignant_chercheur_labo">
             <p>Nom du labo</p>
             <p><input class="w3-input w3-border w3-round-large" type="text" name="labo_ec"></p>
-            <p>
-                <input id="chbx_EC_labo_interne" class="w3-check" type="checkbox" onchange="check('chbx_EC_labo_interne','chbx_EC__labo_externe')">
-                <label>Labo Interne</label>
-
-                <input id="chbx_EC__labo_externe" class="w3-check" type="checkbox" onchange="check('chbx_EC__labo_externe','chbx_EC_labo_interne')">
-                <label>Labo Externe</label>
-            </p>
 
         </div>
 
@@ -106,28 +93,67 @@
         <p>Etablissement :</p>
         <p><input class="w3-input w3-border w3-round-large" type="text" name="Etablissement_doc"></p>
         <p>Debut du contrat :</p>
-        <p><input class="w3-input w3-border w3-round-large" type="text" name="debut_contrat"></p>
+        <p><input class="w3-input w3-border w3-round-large" type="date" name="debut_contrat"></p>
         <p>Fin du contrat :</p>
-        <p><input class="w3-input w3-border w3-round-large" type="text" name="fin_contrat"></p>
+        <p><input class="w3-input w3-border w3-round-large" type="date" name="fin_contrat"></p>
 
         <select id="responsable" >
-                <?php
-                foreach ($personnes as $personne){
-                    foreach ($enseignants_chercheur as $enseignant_chercheur){
-                        if ($personne->id_personne == $enseignant_chercheur->id_personne){
-                        echo "<option value='".$personne -> prenom."'>".$personne -> prenom;
-                        }
-                        }
+            <option value="responsable">responsable</option>
+            <?php
+            foreach ($personnes as $personne){
+                foreach ($enseignants_chercheur as $enseignant_chercheur){
+                    if ($personne->id_personne == $enseignant_chercheur->id_personne){
+                        echo "<option value='".$personne -> prenom." ".$personne -> Nom."'>".$personne -> prenom." ".$personne -> Nom."</option>";
                     }
-//                foreach ($personnes as $personne){
-//                    foreach ($externes as $externe){
-//                        if ($personne->id_personne == $externe->id_personne){
-//                            echo "<option value='".$personne -> prenom."'>".$personne -> prenom;
-//                        }
-//                    }
-//                }
-                    ?>
-        </select>
+                }
+            }
+                foreach ($personnes as $personne){
+                foreach ($externes as $externe){
+                    if ($personne->id_personne == $externe->id_personne){
+                        echo "<option value='".$personne -> prenom." ".$personne -> Nom."'>".$personne -> prenom." ".$personne -> Nom."</option>";
+                    }
+                }
+            }
+            ?>
+        </select><br><br>
+        <select id="coresponsable" >
+            <option value="coresponsable">coresponsable</option>
+            <?php
+            foreach ($personnes as $personne){
+                foreach ($enseignants_chercheur as $enseignant_chercheur){
+                    if ($personne->id_personne == $enseignant_chercheur->id_personne){
+                        echo "<option value='".$personne -> prenom." ".$personne -> Nom."'>".$personne -> prenom." ".$personne -> Nom."</option>";
+                    }
+                }
+            }
+            foreach ($personnes as $personne){
+                foreach ($externes as $externe){
+                    if ($personne->id_personne == $externe->id_personne){
+                        echo "<option value='".$personne -> prenom." ".$personne -> Nom."'>".$personne -> prenom." ".$personne -> Nom."</option>";
+                    }
+                }
+            }
+            ?>
+        </select>(facultatif)<br><br>
+        <select id="coresponsable2" >
+            <option value="coresponsable">coresponsable</option>
+            <?php
+            foreach ($personnes as $personne){
+                foreach ($enseignants_chercheur as $enseignant_chercheur){
+                    if ($personne->id_personne == $enseignant_chercheur->id_personne){
+                        echo "<option value='".$personne -> prenom." ".$personne -> Nom."'>".$personne -> prenom." ".$personne -> Nom."</option>";
+                    }
+                }
+            }
+            foreach ($personnes as $personne){
+                foreach ($externes as $externe){
+                    if ($personne->id_personne == $externe->id_personne){
+                        echo "<option value='".$personne -> prenom." ".$personne -> Nom."'>".$personne -> prenom." ".$personne -> Nom."</option>";
+                    }
+                }
+            }
+            ?>
+        </select>(facultatif)
         <p>Nom du labo</p>
         <p><input class="w3-input w3-border w3-round-large" type="text" name="labo_doc"></p>
         <p>
@@ -139,11 +165,11 @@
         </p>
         <div id="choix_doctorant"  class="w3-gray">
         <p>
-            <input id="chbx_CIFRE" class="w3-check" type="checkbox" onchange="hide('doctorant_entreprise','chbx_CIFRE','chbx_MESNR')">
-            <label>CIFRE</label>
-
-            <input id="chbx_MESNR" class="w3-check" type="checkbox" onchange="affiche('doctorant_entreprise','chbx_MESNR','chbx_CIFRE')">
+            <input id="chbx_MESNR" class="w3-check" type="checkbox" onchange="hide('doctorant_entreprise','chbx_MESNR','chbx_CIFRE')">
             <label>MESNR</label>
+
+            <input id="chbx_CIFRE" class="w3-check" type="checkbox" onchange="affiche('doctorant_entreprise','chbx_CIFRE','chbx_MESNR')">
+            <label>CIFRE</label>
         </p>
 
             <div></div>
@@ -175,7 +201,6 @@ function hide_all() {
     document.getElementById('etudiant').style.display = "none";
     document.getElementById('externe').style.display = "none";
     document.getElementById('enseignant_chercheur').style.display = "none";
-    document.getElementById('enseignant_chercheur_labo_chbx').style.display = "none";
     document.getElementById('enseignant_chercheur_labo').style.display = "none";
     document.getElementById('doctorant').style.display = "none";
     document.getElementById('doctorant_entreprise').style.display = "none";
@@ -238,12 +263,10 @@ $('#personneForm').submit(function(event) {
     // Récupération des valeurs
     var inge = verif_check('inge')
     var tech = verif_check('tech')
-    var chbx_EC_off = verif_check('chbx_EC_off')
-    var chbx_EC_on = verif_check('chbx_EC_on')
-    var chbx_EC_labo_on = verif_check('chbx_EC_labo_on')
-    var chbx_EC_labo_off = verif_check('chbx_EC_labo_off')
+
+
     var chbx_EC_labo_interne = verif_check('chbx_EC_labo_interne')
-    var chbx_EC_labo_externe = verif_check('chbx_EC__labo_externe')
+    var chbx_EC_labo_externe = verif_check('chbx_EC_labo_externe')
     var chbx_labo_interne = verif_check('chbx_labo_interne')
     var chbx_labo_externe = verif_check('chbx_labo_externe')
     var chbx_CIFRE = verif_check('chbx_CIFRE')
@@ -251,6 +274,10 @@ $('#personneForm').submit(function(event) {
 
     var role = document.getElementById('role_personne').value
     var Niveau = document.getElementById('niveau').value
+    var responsable = document.getElementById('responsable').value
+    var coresponsable = document.getElementById('coresponsable').value
+    var coresponsable2 = document.getElementById('coresponsable2').value
+
     console.log(role)
     var $form = $(this),
 
@@ -259,7 +286,7 @@ $('#personneForm').submit(function(event) {
         prenom = $form.find( "input[name='prénom']" ).val(),
         mail = $form.find( "input[name='mail']" ).val(),
         Etablissement = $form.find( "input[name='Etablissement']" ).val(),
-
+        Statut = $form.find( "input[name='Statut']" ).val(),
         Organisation = $form.find( "input[name='Organisation']" ).val(),
         labo_ec = $form.find( "input[name='labo_ec']" ).val(),
         Etablissement_doc = $form.find( "input[name='Etablissement_doc']" ).val(),
@@ -275,8 +302,9 @@ $('#personneForm').submit(function(event) {
         'labo_doc':labo_doc,'fin_contrat':fin_contrat,'debut_contrat':debut_contrat,'Etablissement_doc':Etablissement_doc,
         'labo_ec':labo_ec,'Organisation':Organisation,'Niveau':Niveau,'Etablissement':Etablissement,'chbx_MESNR':chbx_MESNR,
         'chbx_CIFRE':chbx_CIFRE,'chbx_labo_externe':chbx_labo_externe,'chbx_labo_interne':chbx_labo_interne,
-        'chbx_EC_labo_externe':chbx_EC_labo_externe,'chbx_EC_labo_interne':chbx_EC_labo_interne,'chbx_EC_labo_on':chbx_EC_labo_on,
-        'chbx_EC_on':chbx_EC_on,'chbx_EC_off':chbx_EC_off,'chbx_EC_labo_off':chbx_EC_labo_off})
+        'chbx_EC_labo_externe':chbx_EC_labo_externe, 'chbx_EC_labo_interne':chbx_EC_labo_interne,'Statut':Statut,
+        'responsable':responsable,'coresponsable':coresponsable,'coresponsable2':coresponsable2
+    })
     .done(function() {
         //window.location.replace('http://localhost/LF2L-interface/LF2L/public/personne/envoie')
     });

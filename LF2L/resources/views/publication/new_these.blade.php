@@ -93,7 +93,7 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById(num_jure).innerHTML = this.responseText;
-            }
+        }
         };
         xhttp.open("GET", "http://localhost/LF2L-interface2/LF2L/resources/views/supp_jure.blade.php", true);
         xhttp.send();

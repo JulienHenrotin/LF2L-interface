@@ -33,6 +33,7 @@ for ($i = 0; $i < count($matches_hal[1]); $i++) {
         $pattern_date = "#type=&quot;whenSubmitted&quot;&gt;(.*?) #";
 
 
+
         preg_match_all($pattern_date, $donnees, $matches_date);
         preg_match_all($pattern_langue, $donnees, $matches_langue);
         preg_match_all($pattern_aut, $donnees, $matches_aut);
@@ -69,7 +70,7 @@ for ($i = 0; $i < count($matches_hal[1]); $i++) {
         echo "<br>";
 
         $publi = new App\publication;
-        $publi->titre_article = $matches_titre[1][1];
+        $publi->titre_article = substr($matches_titre[1][1], 0, -4);
         $publi->domaine_article = 'nop';
         $publi->date_publication = $matches_date[1][0];
         $publi->langue_article = $matches_langue[1][0];
@@ -78,16 +79,29 @@ for ($i = 0; $i < count($matches_hal[1]); $i++) {
 
 
 
+        if ($matches_type[1][0] == 'REPORT') {
+
+            $articles = \App\publication::where('identifiant', $matches_hal[1][$i])->get();
+            $rapport = new App\rapport();
+            foreach ($articles as $article) {
+
+                $rapport->id_article = $article->id_article;
+                $rapport->save();
+
+            }
+        }
+
+
         if ($matches_type[1][0] == 'UNDEFINED') {
 
-           /* $articles = \App\publication::where('identifiant', $matches_hal[1][$i])->get();
+            $articles = \App\publication::where('identifiant', $matches_hal[1][$i])->get();
             $prepubli = new App\prepublication;
             foreach ($articles as $article) {
 
                 $prepubli->id_article = $article->id_article;
                 $prepubli->save();
 
-            }*/
+            }
         }
 
         echo "<br>";
@@ -113,6 +127,35 @@ for ($i = 0; $i < count($matches_hal[1]); $i++) {
 
             for ($jury = 0; $jury < count($matches_jure[0]); $jury++) {
                 echo $matches_jure[1][$jury] . "<br>";
+                $verif_jure = 1;
+                $jures= \App\jure::all();
+                foreach ($jures as $jure){
+                    if ($jure -> nom_jure == $matches_jure[1][$jury]){
+                        $verif_jure = 0;
+                    }
+                }
+
+                if($verif_jure==1){
+                    $new_jure = new App\jure;
+                    $new_jure -> nom_jure = $matches_jure[1][$jury];
+                    $new_jure -> prenom_jure = '';
+                    $new_jure -> save();
+
+                    $publications= \App\publication::all();
+                    $liste_jures = \App\jure::all();
+                    foreach ($publications as $publication){
+                        if ($publication -> identifiant == $matches_hal[1][$i] ){
+                            foreach ($liste_jures as $liste_jure){
+                                if ($liste_jure -> nom_jure == $matches_jure[1][$jury]){
+                                    $new_juge = new App\juge;
+                                    $new_juge -> id_article = $publication -> id_article;
+                                    $new_juge -> id_jury = $liste_jure -> id_jury;
+                                    $new_juge -> save();
+                                }
+                            }
+                        }
+                    }
+                }
             }
             echo "établissement : " . $matches_ecole[1][0] . "<br>";
 
@@ -174,7 +217,7 @@ for ($i = 0; $i < count($matches_hal[1]); $i++) {
             echo "editeur : " . $matches_journal[2][0] . "<br>";
 
 
-           /* $verif_editeur = 1;
+           $verif_editeur = 1;
             $editeurs= \App\editeur_journal::all();
             foreach ($editeurs as $editeur){
                 if ($editeur -> nom_editeur_journal == $matches_journal[2][0]){
@@ -223,7 +266,7 @@ for ($i = 0; $i < count($matches_hal[1]); $i++) {
                     $lien_journal->id_article = $article->id_article;
                     $lien_journal->id_journal = $journal->id_journal;
                     $lien_journal->save();}
-                    }*/
+                    }
 
 
 
@@ -250,7 +293,7 @@ for ($i = 0; $i < count($matches_hal[1]); $i++) {
             echo "début de la conf : " . $matches_debut_conf[1][0] . "<br>";
 
 
-            /*$articles= \App\publication::where('identifiant',$matches_hal[1][$i])->get();
+            $articles= \App\publication::where('identifiant',$matches_hal[1][$i])->get();
 
              $publi_conf = new App\publication_conference;
             foreach ($articles as $article){
@@ -300,8 +343,7 @@ for ($i = 0; $i < count($matches_hal[1]); $i++) {
                     $lien_conf -> save();
 
                 }
-            }*/
-
+            }
 
         }
 
