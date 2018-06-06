@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Session;
 
 class creationProjet extends Controller
 {
@@ -63,7 +63,7 @@ class creationProjet extends Controller
             $idparti = \App\parti_prenant::where('nom_source', $temporaire)->get();
             //dd($idparti[0]->nom_source);
             echo $h . '<br>';
-            echo "nom source".$temporaire.'<br>';
+            echo "nom source" . $temporaire . '<br>';
             dump($idparti);
             // echo $idparti[1]->id_source_financement;
             //echo $idparti[2]->id_source_financement;
@@ -82,9 +82,7 @@ class creationProjet extends Controller
 
 
         }
-        //requete pour trouver id de partie prenant corespondant
-        //ajouter dans la table de relation
-        //redirect('http://lf2l/detailProjet?nom='.$nom.'&date_pu='.$date_pu);
-       return view('premiere');
+        session::put('projet.nom', $nom);
+        return redirect('/detailProjet');
     }
 }

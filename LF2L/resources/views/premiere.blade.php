@@ -34,8 +34,9 @@ if (Session::get('personne.nom') != null) {
     </form>
 </div>
 <?php
-$test = session::get('personne');
-print_r($test);
+//$test = session::get('personne');
+$test = session()->all();
+dump($test);
 ?>
 </body>
 

@@ -15,7 +15,7 @@
         <input class="w3-input w3-border w3-round-xxlarge" name="mail">
 
         <p>Votre mot de passe </p>
-        <input class="w3-input w3-border w3-round-xxlarge"  name="password">
+        <input class="w3-input w3-border w3-round-xxlarge"  name="password" type="password">
         <input type="submit" class="w3-button w3-btn w3-round-xxlarge w3-margin w3-green w3-hover-purple">
 
     </form>

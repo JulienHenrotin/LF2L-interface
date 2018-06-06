@@ -10,6 +10,13 @@ var averifTache = [];
 var compteurTacheCarre = 601;
 var compteurTache = 701;
 
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 // les ID de depart définis avec les compteurs ont une valeur arbitraire -> peu poser probleme si on ajoute
 // BEAUCOUP d'éléments pour un meme groupe (personnes, resources , taches)
 
@@ -36,7 +43,7 @@ function myFunctiondropbox(id) {
     }
 }
 
-function ajoutAct(resources, personnes, tache) {
+function ajoutAct(resources, personnes, tache, id) {
     //fonction faisant appel à de l'AJAX : permet d'actualiser une partie de la page
     // sans rechargé toute la page -> sert pour toutes les parties dynamiques du site
     //ou nous faisons appel à la BDD
@@ -69,23 +76,58 @@ function ajoutAct(resources, personnes, tache) {
         , true);
     xhttp.send();
     //envoi de tout les compteurs pour creer tout les nouveaux éléments HTML avec un id unique
+    var personneString = "";
+    var resourceString = "";
+    var tacheString = "";
+    averifresource.forEach(function (element) {
+        console.log("flaggggg");
+        resourceString = resourceString + element + ";";
+    })
+    averifPersonne.forEach(function (element1) {
+        console.log("flagggggpppp");
+        personneString = personneString + element1 + ";";
+    })
+    averifTache.forEach(function (element2) {
+        console.log("flagggggtttttt");
+        tacheString = tacheString + element2 + ";";
+    })
+    console.log("tache ======== " + averifresource);
+    console.log("personne ======= " + averifPersonne);
+    console.log("ressources =========" + averifTache);
+    var processus = document.getElementById("1 option").value;
+    var nomACT = document.getElementById("nomACT").value;
+    // var select = document.getElementById(id);
+    // select.insertAdjacentHTML('beforeend', " <form method='get' id='Fressource'>{{csrf_field()}}" +
+    //     "<input type='hidden' value='" + resourceString + "' name='ressource'> " +
+    //     "<input type='hidden' value='" + personneString + "' name='personnes'>" +
+    //     "<input type='hidden' value='" + tacheString + "' name='taches'>" +
+    //     "<input type='hidden' value='" + processus + "' name='processus'>");
+    // "<input type='hidden' value='" + nomACT + "' name='nomACT'>"
+    // select.insertAdjacentHTML('afterend', '</form>')
+    // var select2 = document.getElementById('Fressource');
+    // // console.log("tache ======== "+tacheString);
+    // // console.log("personne ======= "+personneString);
+    // // console.log("ressources =========" + resourceString);
+    // select2.submit();
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost/LF2L-interface/LF2L/resources/views/projet/detailProjet.blade.php", true)
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send("processus=processus&nomACT=nomACT");
+
     averifresource = [];
     averifPersonne = [];
     averifTache = [];
-
-
 }
 
+//=================================================================================
 function ajoutRessource(ressource, value) {
     var xhttp = new XMLHttpRequest();
     var a = document.getElementsByTagName("p1");
     //======VERIF QU IL Y AI PAS 2 FOIS LA MEME CHOSE
     if (averifresource.indexOf(ressource) == -1) {
         averifresource.push(ressource);
-        console.log("verif ok");
     }
     else {
-        console.log("verif" + averifresource.indexOf(ressource));
         alert("vous en pouvez pas ajouter deux fois la meme resource ! ");
         return;
     }
@@ -105,10 +147,8 @@ function ajoutPersonne(ressource, value) {
     //======VERIF QU IL Y AI PAS 2 FOIS LA MEME CHOSE
     if (averifPersonne.indexOf(ressource) == -1) {
         averifPersonne.push(ressource);
-        console.log("verif ok");
     }
     else {
-        console.log("verif" + averifPersonne.indexOf(ressource));
         alert("Vous en pouvez pas ajouter deux fois la meme personne dans une même activité ! ");
         return;
     }
@@ -135,7 +175,6 @@ function suppre_resource(leID) {
     //supprimer dans le tableau de stockage temporaire la resource
     //suppriler grace a de l'AJAX l'élément en HTML
     var trouver = document.getElementById(leID).innerText;
-    console.log(trouver);
     var re = /(.*?) /;
     var resulte = trouver.match(re);
     averifresource.splice(resulte[1], 1);
@@ -147,14 +186,12 @@ function suppre_resource(leID) {
     };
     xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/vide.blade.php", true);
     xhttp.send();
-    console.log("ca supprime -> " + String(leID));
 }
 
 
 function suppre_personne(leID) {
     // meme principe que plus haut
     var trouver = document.getElementById(leID).innerText;
-    console.log("premier tableau -> " + averifPersonne);
     var re = /(.*?) /;
     var resulte = trouver.match(re);
     averifPersonne.splice(resulte[1], 1);
@@ -166,7 +203,6 @@ function suppre_personne(leID) {
     };
     xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/vide.blade.php", true);
     xhttp.send();
-    console.log("ca supprime -> " + String(leID));
 }
 
 //======================================================================
@@ -178,10 +214,8 @@ function ajoutTache(ressource, value) {
     //======VERIF QU IL Y AI PAS 2 FOIS LA MEME CHOSE
     if (averifTache.indexOf(ressource) == -1) {
         averifTache.push(ressource);
-        console.log("verif ok");
     }
     else {
-        console.log("verif" + averifTache.indexOf(ressource));
         alert("Vous en pouvez pas ajouter deux fois la meme tache dans une même activité ! ");
         return;
     }
@@ -196,13 +230,9 @@ function ajoutTache(ressource, value) {
 
 function suppre_tache(leID) {
     var trouver = document.getElementById(leID).innerText;
-    console.log("premier tableau -> " + averifTache);
-    console.log(trouver);
     var re = /(.*?) /;
     var resulte = trouver.match(re);
-    console.log("reultat -> " + resulte[1])
     averifTache.splice(resulte[1], 1);
-    console.log("tableau clean -> " + averifTache);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -211,5 +241,4 @@ function suppre_tache(leID) {
     };
     xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/vide.blade.php", true);
     xhttp.send();
-    console.log("ca supprime -> " + String(leID));
 }

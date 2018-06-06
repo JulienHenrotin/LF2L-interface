@@ -55,7 +55,6 @@ header("Access-Control-Allow-Origin: *");
     <div id="truc"></div>
     <input onclick="traitementArgent()" type="submit" class="w3-button w3-btn w3-round-xxlarge w3-margin w3-green w3-hover-purple"
            value="Créer le projet" form="formulaire">
-
 </div>
 </div>
 <div class="w3-col" style="width:20%"><p></p></div>
