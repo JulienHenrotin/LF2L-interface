@@ -4,7 +4,7 @@ var argent = new Object();
 // tableau pour stocker de maniere temporaire
 // les sources de finnacements et la sommes qui leur correspond
 
-function ajout_financement(source) {
+function ajout_financement(nom, prenom) {
     // fonction qui fait appel a l'AJAX -> permet d'actualiser une partie de la page
     // sans rechargé toute la page -> sert pour toutes les parties dynamique du site
     //ou nous faisons appel à la BDD
@@ -19,14 +19,14 @@ function ajout_financement(source) {
     };
 
     //======VERIF QU IL Y AI PAS 2 FOIS LA MEME CHOSE
-    if (verifFinance.indexOf(source) == -1) {
-        verifFinance.push(source);
+    if (verifFinance.indexOf(nom+" "+prenom) == -1) {
+        verifFinance.push(nom+" "+prenom);
     }
     else {
-        alert("vous en pouvez pas ajouter deux fois la meme source de financement pour un même projet ! ");
+        alert("vous en pouvez pas ajouter deux fois la meme personne pour un même projet ! ");
         return;
     }
-    xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/tempCreationProjet.blade.php?source=" + source + "&leID=" + a.length, true);
+    xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/tempCreationProjet.blade.php?source=" + prenom+" "+nom + "&leID=" + a.length, true);
     xhttp.send();
     //envois d'une requette pour aller chercher la partie de html a rajouter quand l'utilisateur ajoute un élément
 }
@@ -64,23 +64,25 @@ function myFunctiondropbox(id) {
     //fonction qui vient de W3school -> anime les dropbox
 
     var x = document.getElementById(id);
-
+    console.log("flaggg1");
     if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
+        console.log("flaggg2");
     } else {
         x.className = x.className.replace(" w3-show", "");
+        console.log("flaggg3");
     }
 }
 
 
-function ajoutArgent(value, source) {
+function ajoutRole(value, source) {
     // quand l'utilisateur ecris un montant de financement
     // --> ajoute dans le tableau la somme correspondant à la source
     var nomSource = document.getElementById(source).innerText;
     var re = /(.*?)_/;
     var resulte = nomSource.match(re);
 console.log("======"+argent);
-    console.log("valeur est  " + value + "et le source est : " + resulte[1]);
+    console.log("role est:  " + value + " et la personne est : " + resulte[1]);
     argent[resulte[1]] = value;
     console.log(argent);
 }
@@ -94,7 +96,7 @@ function traitementArgent() {
     }
     var select = document.getElementById('formulaire');
 
-    var ajout = "{{csrf_field()}} <input type='hidden' value='" + argentString + "' name='argentcache' form='formulaire'>";
+   // var ajout = "{{csrf_field()}} <input type='hidden' value='" + argentString + "' name='argentcache' form='formulaire'>";
     select.insertAdjacentHTML('beforeend', "{{csrf_field()}} <input type='hidden' value='" + argentString + "' name='argentcache' form='formulaire'>");
     select.submit();
 

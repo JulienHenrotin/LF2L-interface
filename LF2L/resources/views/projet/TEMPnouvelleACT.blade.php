@@ -16,16 +16,15 @@ preg_match_all($pattern_resources, $personnes, $match_personnes);
 preg_match_all($pattern_resources, $taches, $match_taches);
 //recuperation des compteur pour attribuer les ID au éléments
 // les infos venant de la bdd sont sous forme de string
-// utilisations d'expressions régulieres permet de retrouver les infos souhaitées
+// utilisations d'expressions régulières permet de retrouver les infos souhaitées
 // echo $matches_resources;
-print_r($matches_resources);
 ?>
 
 
 <div class='w3-row-padding'>
     <div class='w3-container'>
         <button onclick='myFunction(<?php echo $compteur; ?>)' class='w3-btn w3-block w3-black w3-left-align'>
-            Activité <?php echo $compteur - 299; ?>  </button>
+            Activité <?php echo $compteur - 300; ?>  </button>
         <div id="<?php echo $compteur; ?>" name='contenue' class='w3-container w3-hide'>
             <p>Parametre de l'activité</p>
             <input class="w3-input w3-border w3-round-large" type="text" placeholder="nom de l'activité">
@@ -46,7 +45,7 @@ print_r($matches_resources);
                 </div>
                 <div class='w3-container'>
                     <div id='<?php echo $compteurResourceCarre ?>'
-                         class="w3-panel w3-white w3-topbar w3-bottombar w3-border-amber">
+                         class="w3-panel w3-border w3-round-larger">
                         <p>Liste de ressources</p>
                     </div>
                 </div>
@@ -72,7 +71,7 @@ print_r($matches_resources);
                 </div>
                 <div class='w3-container'>
                     <div id='<?php echo $compteurPersonneCarre ?>'
-                         class="w3-panel w3-white w3-topbar w3-bottombar w3-border-amber">
+                         class="w3-panel w3-border w3-round-large">
                         <p>Liste des personnes participants au porjet</p>
                     </div>
                 </div>
@@ -95,7 +94,7 @@ print_r($matches_resources);
                 </div>
                 <div class='w3-container'>
                     <div id='<?php echo $compteurTacheCarre ?>'
-                         class="w3-panel w3-white w3-topbar w3-bottombar w3-border-amber">
+                         class="w3-panel w3-border w3-round-large">
                         <p>Liste de ressources</p>
                     </div>
                 </div>

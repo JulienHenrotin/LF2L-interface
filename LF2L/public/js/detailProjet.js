@@ -11,11 +11,11 @@ var compteurTacheCarre = 601;
 var compteurTache = 701;
 
 
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+// $.ajaxSetup({
+//     headers: {
+//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     }
+// });
 
 // les ID de depart définis avec les compteurs ont une valeur arbitraire -> peu poser probleme si on ajoute
 // BEAUCOUP d'éléments pour un meme groupe (personnes, resources , taches)
@@ -43,38 +43,39 @@ function myFunctiondropbox(id) {
     }
 }
 
-function ajoutAct(resources, personnes, tache, id) {
+function ajoutAct(resources, personnes, tache, id ) {
     //fonction faisant appel à de l'AJAX : permet d'actualiser une partie de la page
     // sans rechargé toute la page -> sert pour toutes les parties dynamiques du site
     //ou nous faisons appel à la BDD
     //quand on ajoute une activité on cache les boutons pour supprimer les resources
     // le but est que les users modifient qu'une seule activité en meme temps
-    var nbsuppre = document.getElementsByClassName('w3-button w3-circle w3-red').length;
-    console.log("nbsuppre -> " + nbsuppre);
-    for (var i = 0; i < nbsuppre; i++) {
-        var asuppre = document.getElementById('suppre')
-        asuppre.style.visibility = "hidden";
-        console.log("while de suppre");
-    }
-    console.log("Ajout d'une activité");
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("main").innerHTML += this.responseText;
-        }
-    };
-    compteur = compteur + 1;
-    compteur1 = compteur1 + 1;
-    compteurResourceCarre = compteurResourceCarre + 1;
-    compteurPersonneCarre = compteurPersonneCarre + 1;
-    cpersonne = cpersonne + 1;
-    compteurTacheCarre = compteurTacheCarre + 1;
-    compteurTache = compteurTache + 1;
-    xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/TEMPnouvelleACT.blade.php?compteur=" + compteur + "&compteur1=" + compteur1 + "&compteurResourceCarre=" + compteurResourceCarre + "&resources=" + resources
-        + "&compteurPersonneCarre=" + compteurPersonneCarre + "&cpersonne=" + cpersonne + "&personne=" + personnes
-        + "&compteurTacheCarre=" + compteurTacheCarre + "&compteurTache=" + compteurTache + "&tache=" + tache
-        , true);
-    xhttp.send();
+    // var nbsuppre = document.getElementsByClassName('w3-button w3-circle w3-red').length;
+    // for (var i = 0; i < nbsuppre; i++) {
+    //     var asuppre = document.getElementById('suppre')
+    //     asuppre.style.visibility = "hidden";
+    //     console.log("while de suppre");
+    // }
+    // console.log("Ajout d'une activité");
+    // var xhttp = new XMLHttpRequest();
+    // xhttp.onreadystatechange = function () {
+    //     if (this.readyState == 4 && this.status == 200) {
+    //         document.getElementById("main").innerHTML += this.responseText;
+    //     }
+    // };
+    // compteur = compteur + 1;
+    // compteur1 = compteur1 + 1;
+    // compteurResourceCarre = compteurResourceCarre + 1;
+    // compteurPersonneCarre = compteurPersonneCarre + 1;
+    // cpersonne = cpersonne + 1;
+    // compteurTacheCarre = compteurTacheCarre + 1;
+    // compteurTache = compteurTache + 1;
+    // xhttp.open("GET", "http://localhost/LF2L-interface/LF2L/resources/views/projet/TEMPnouvelleACT.blade.php?compteur=" + compteur + "&compteur1=" + compteur1 + "&compteurResourceCarre=" + compteurResourceCarre + "&resources=" + resources
+    //     + "&compteurPersonneCarre=" + compteurPersonneCarre + "&cpersonne=" + cpersonne + "&personne=" + personnes
+    //     + "&compteurTacheCarre=" + compteurTacheCarre + "&compteurTache=" + compteurTache + "&tache=" + tache
+    //     , true);
+    // xhttp.send();
+
+
     //envoi de tout les compteurs pour creer tout les nouveaux éléments HTML avec un id unique
     var personneString = "";
     var resourceString = "";
@@ -96,24 +97,27 @@ function ajoutAct(resources, personnes, tache, id) {
     console.log("ressources =========" + averifTache);
     var processus = document.getElementById("1 option").value;
     var nomACT = document.getElementById("nomACT").value;
-    // var select = document.getElementById(id);
-    // select.insertAdjacentHTML('beforeend', " <form method='get' id='Fressource'>{{csrf_field()}}" +
-    //     "<input type='hidden' value='" + resourceString + "' name='ressource'> " +
-    //     "<input type='hidden' value='" + personneString + "' name='personnes'>" +
-    //     "<input type='hidden' value='" + tacheString + "' name='taches'>" +
-    //     "<input type='hidden' value='" + processus + "' name='processus'>");
-    // "<input type='hidden' value='" + nomACT + "' name='nomACT'>"
-    // select.insertAdjacentHTML('afterend', '</form>')
-    // var select2 = document.getElementById('Fressource');
-    // // console.log("tache ======== "+tacheString);
-    // // console.log("personne ======= "+personneString);
-    // // console.log("ressources =========" + resourceString);
-    // select2.submit();
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost/LF2L-interface/LF2L/resources/views/projet/detailProjet.blade.php", true)
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send("processus=processus&nomACT=nomACT");
 
+    console.log('ok '+ id);
+    var select = document.getElementById("form_invisible");
+    select.insertAdjacentHTML('beforeend',
+        "<input type='hidden' value='" + resourceString + "' name='ressource'>" +
+        "<input type='hidden' value='" + personneString + "' name='personnes'>" +
+        "<input type='hidden' value='" + tacheString + "' name='taches'>" +
+        "<input type='hidden' value='" + processus + "' name='processus'>"+
+    "<input type='hidden' value='" + nomACT + "' name='nomACT'>");
+   // select.insertAdjacentHTML('afterend', '</form>');
+    //var select2 = document.getElementById('Fressource');
+    //var token = select2.find("input[name='_token']").val();
+    select.submit();
+    console.log("flag1");
+    //var xhr = new XMLHttpRequest();
+    console.log("flag2");
+    //xhr.open("POST", "http://lf2l/detailProjet", true)
+    // xhr.open("POST", "http://localhost/LF2L-interface/LF2L/resources/views/projet/detailACTIVITE.blade.php", true);
+    // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    // xhr.send("processus=processus&nomACT=nomACT");
+    console.log("flag3");
     averifresource = [];
     averifPersonne = [];
     averifTache = [];

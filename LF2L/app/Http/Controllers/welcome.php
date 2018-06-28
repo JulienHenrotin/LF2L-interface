@@ -24,7 +24,7 @@ class welcome extends Controller
             return redirect('listeProduits');
         }
         if (Input::get('Mesprojets')) {
-            return redirect('mesProjets');
+            return redirect('suivi_projet');
         }
         if (Input::get('Creerunprojet')) {
             return redirect('creationProjet');

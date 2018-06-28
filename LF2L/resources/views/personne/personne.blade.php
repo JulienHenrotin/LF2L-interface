@@ -1,4 +1,4 @@
-
+@include('verifConnexion')
 <html>
 
 <title>W3.CSS</title>
