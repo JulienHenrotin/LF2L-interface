@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
-<title>W3.CSS</title>
+<title>Accueil LF2L</title>
+<link rel="shortcut icon" href="image/favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
 <body>
+
+@include('header')
 <?php
 use Illuminate\Support\Facades\Session;
 if (Session::get('personne.nom') != null) {
@@ -13,8 +15,6 @@ if (Session::get('personne.nom') != null) {
 } else {
     $boutonLG = 'login';
 }
-
-
 ?>
 <div class="w3-container">
 
@@ -33,11 +33,7 @@ if (Session::get('personne.nom') != null) {
                value="<?php echo $boutonLG;?>" name="<?php echo $boutonLG;?>">
     </form>
 </div>
-<?php
-//$test = session::get('personne');
-$test = session()->all();
-dump($test);
-?>
 </body>
-
+@include('footer')
+@include('verifConnexion')
 </html>

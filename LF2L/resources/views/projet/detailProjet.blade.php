@@ -1,4 +1,6 @@
+
 <?php
+
 header("Access-Control-Allow-Origin: *");
 //la partie en php instancie sous forme d'objets les taables de la BDD qu'on a besoin
 //les tables sont mises sous forme de string grace au foreah et aux concaténations
@@ -31,8 +33,11 @@ foreach ($tableTache as $tache1) {
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/detailProjet.js') }}"></script>
+    <title>Détail du projet</title>
+    <link rel="shortcut icon" href="image/favicon.ico">
 </head>
 <body>
+@include('header')
 <div class="w3-row-padding">
     <div class="w3-half">
         <div id="main" class="w3-container">
@@ -42,8 +47,9 @@ foreach ($tableTache as $tache1) {
             <button onclick="myFunction('1 form')" class="w3-btn w3-block w3-black w3-left-align">Activité 1</button>
             <div id="1 form" class="w3-container w3-hide">
                 <div class='w3-container'>
+
                     <input class="w3-input w3-border w3-round-large" type="text" placeholder="nom de l'activité"
-                           id="nomACT">
+                           id="nomACT"> </br>
                     <select class="w3-select w3-border" name="option" id="1 option">
                         <option value="" disabled selected>Processus</option>
                         <?php
@@ -52,9 +58,11 @@ foreach ($tableTache as $tache1) {
                         <option value="<?php echo $unProcessus->nom_processus; ?>"> <?php echo $unProcessus->nom_processus ?></option>
                         <?php endforeach; ?>
                     </select>
+                </br>
                     <div class='w3-dropdown-click'>
+                    </br>
                         <button onclick='myFunctiondropbox(300)' class='w3-button w3-black'>
-                            Resources
+                            Cliquez pour choisir les resources
                         </button>
                         <div id='300' class='w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom'>
                             <?php foreach ($resourcesBDD as $table): ?>
@@ -65,8 +73,8 @@ foreach ($tableTache as $tache1) {
                     </div>
                     <div class='w3-container'>
                         <div id='100'
-                             class="w3-panel w3-white w3-topbar w3-bottombar w3-border-amber">
-                            <p>Liste de ressources</p>
+                             class="w3-panel w3-border w3-round-large">
+                            <p>Liste de ressources :</p>
                         </div>
                     </div>
                 </div>
@@ -77,7 +85,7 @@ foreach ($tableTache as $tache1) {
                     <div class='w3-dropdown-click'>
 
                         <button onclick='myFunctiondropbox(400)' class='w3-button w3-black'>
-                            Personnes
+                            Cliquez pour choisir les personnes
                         </button>
                         <div id='400' class='w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom'>
 
@@ -94,8 +102,8 @@ foreach ($tableTache as $tache1) {
                         </div>
                     </div>
                     <div class='w3-container'>
-                        <div id='200' class="w3-panel w3-white w3-topbar w3-bottombar w3-border-amber">
-                            <p>Liste des personnes participants au projet</p>
+                        <div id='200' class="w3-panel w3-border w3-round-large">
+                            <p>Liste des personnes participants au projet :</p>
                         </div>
                     </div>
 
@@ -105,7 +113,7 @@ foreach ($tableTache as $tache1) {
                     <div class='w3-container'>
                         <div class='w3-dropdown-click'>
                             <button onclick='myFunctiondropbox(700)' class='w3-button w3-black'>
-                                Taches de l'activité
+                                Cliquez pour choisir les aches de l'activité
                             </button>
                             <div id='700' class='w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom'>
                                 <?php foreach ($tableTache as $match): ?>
@@ -116,8 +124,8 @@ foreach ($tableTache as $tache1) {
                             </div>
                         </div>
                         <div class='w3-container'>
-                            <div id='600' class="w3-panel w3-white w3-topbar w3-bottombar w3-border-amber">
-                                <p>Liste de ressources</p>
+                            <div id='600' class="w3-panel w3-border w3-round-large">
+                                <p>Liste des taches : </p>
                             </div>
                         </div>
                     </div>
@@ -128,11 +136,15 @@ foreach ($tableTache as $tache1) {
                     Sauvegarder l'activité
                     <!-- lance une fonction JS qui grace a l'ajax ajoute une activité -->
                 </button>
+                <form id="form_invisible" method="post">
+                    {{csrf_field()}}
+                </form>
             </div>
         </div>
     </div>
 </div>
 </body>
+@include('footer')
 <script type="text/javascript" src="{{ URL::asset('js/detailProjet.js') }}"></script>
 {{--script qui gere toute la page--}}
 </html>

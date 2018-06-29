@@ -9,9 +9,9 @@ class creationProjet extends Controller
 {
     function affichage()
     {
-        $financements = \App\parti_prenant::all();
+        $personne = \App\personne::all();
         return view('projet\creationProjet', [
-            'financements' => $financements,
+            'personne' => $personne
         ]);
 //        affichage de la page de creation de projet et envoi de la table partie prenant pour afficher
 //    les différentes sources
@@ -21,13 +21,10 @@ class creationProjet extends Controller
     {
         //instanciation de la bdd puis ajout d'un enregistrement
         // dans la  table
-//        $nom = $_POST['titre'];
-//        $date_pu = $_POST['date_pu'];
-//        $super = $_POST['super'];
 
         $nom = request('titre');
         $date_pu = request('date_pu');
-        $argent = request('argentcache');
+        $personne_et_role = request('argentcache');
 
 
         $projet = new \App\projet;
@@ -36,16 +33,13 @@ class creationProjet extends Controller
         $projet->save();
 
         $idcourant = \App\projet::where('nom_projet', $nom)->get();
-        //dd($idcourant[0]->nom_projet);
-        //traitement du string
-
+        dump($idcourant[0]->id_projet);
         $pattern_resources = "#.*?;#";
         $pattern = "#(.*?),(.*?);#";
+        $pattern2 = "#(.*?) (.*)#";
         $x = 0;
-
-        //$final=array();
-        preg_match_all($pattern_resources, $argent, $match_taches);
-        //dd($match_taches);
+        // personne_et_role --> string avec : persone,role;personne,role
+        preg_match_all($pattern_resources, $personne_et_role, $match_taches);
         foreach ($match_taches as $match_tach) {
             foreach ($match_tach as $match2) {
                 preg_match_all($pattern, $match2, $deuxieme);
@@ -54,33 +48,29 @@ class creationProjet extends Controller
                 $x = $x + 1;
             }
         }
-        //dd($final[]);
+        dump($final);
         $compteur = count($final);
-        //dd($compteur);
-        for ($h = 0; $h < $compteur; $h++) {    //METRE A 1
+        dump($compteur);
+        $personnes = \App\personne::all();
+        for ($h = 0; $h < $compteur; $h++) {
+            //la variable string de départ est déoupée et rangée dans des tableaux
             $temporaire = $final[$h][0];
-            $tempoargent = $final[$h][1];
-            $idparti = \App\parti_prenant::where('nom_source', $temporaire)->get();
-            //dd($idparti[0]->nom_source);
-            echo $h . '<br>';
-            echo "nom source" . $temporaire . '<br>';
-            dump($idparti);
-            // echo $idparti[1]->id_source_financement;
-            //echo $idparti[2]->id_source_financement;
+            $temporole = $final[$h][1];
 
+            preg_match_all($pattern2, $temporaire, $match_tempo);
 
-//            if ($h == 2) {
-//                echo "-".$temporaire = $final[2][0]."-";
-//                dd($idparti);
-//            }
-
-            $finance = new \App\finance;
-            $finance->montant_finance = $tempoargent;
-            $finance->id_source_financement = $idparti[0]->id_source_financement;
-            $finance->id_projet = $idcourant[0]->id_projet;
-            $finance->save();
-
-
+            foreach ($personnes as $personne) {
+                //requettes double condition
+                // on cherches les personnes dans la BDD par rapport a nom et prénom
+                if ($match_tempo[1][0] == $personne->prenom && $match_tempo[2][0] == $personne->Nom) {
+                    dump($personnes);
+                    $new_participant = new \App\personne_participe_projet;
+                    $new_participant->id_personne = $personne->id_personne;
+                    $new_participant->id_projet = $idcourant[0]->id_projet;
+                    $new_participant ->role_personne_projet = $temporole;
+                    $new_participant->save();
+                }
+            }
         }
         session::put('projet.nom', $nom);
         return redirect('/detailProjet');

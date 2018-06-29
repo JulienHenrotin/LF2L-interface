@@ -11,7 +11,7 @@ class detailProjetController extends Controller
 {
     function affichage()
     {
-        $resources = \App\resources::all();
+        $resources = \App\ressources::all();
         $tablesP = \App\personne::all();
         $tableTache = \App\taches::all();
         $processus =  \App\processus::all();
@@ -23,22 +23,22 @@ class detailProjetController extends Controller
 //            dump(request('processus'));
 //            dump (request('ressources'));
 //        }
-//
+
         return view("projet/detailProjet", [
             'resourcesBDD'=>$resources,
             'tablesP'=>$tablesP,
             'tableTache'=>$tableTache,
             'processus'=>$processus,
         ]);
-
     }
 
     function traitement()
     {
-        dd("salut");
-       // $ressource = request('ressource');
-        //dd($ressource);
-//        return "ca amrefzrggzzfgergergegqfgqetheqhaehgg";
+        dd('salut');
+        $activite = new \App\activite;
+        $activite->nom_activite =$_POST["nomACT"];
+        $activite->description_activite="0";
+        $activite->save();
         return view("premiere");
     }
 }
