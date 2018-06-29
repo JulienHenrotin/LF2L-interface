@@ -8,10 +8,11 @@
     form {display: inline;}
 </style>
 <body>
-<div>
 @include('header')
+<div>
 
-    <a href="/ressource"><button>Ajouter une ressource</button></a>
+
+    <a href="/ressource" style="margin-left: 15%"><button>Ajouter une ressource</button></a>
 <input class="w3-input w3-border w3-padding" type="text" placeholder="Chercher une ressource" id="myInput" onkeyup="recherche()" style="max-Width:70%;margin-left: 15%">
 <br>
 <div id='liste' class="w3-container w3-row-padding " style="padding-left: 7.5%">

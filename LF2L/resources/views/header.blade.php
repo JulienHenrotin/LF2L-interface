@@ -5,9 +5,9 @@
 <div class="w3-bar " style="background-color: #592c8e;">
     <div style="padding-left: 10%;color: white;padding-bottom: 4%">
         <a href="#" class="w3-bar-item w3-button w3-padding-16">Home</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-16">Link 1</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-16">Link 2</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-16">Link 3</a>
+        <a href="/ressource_liste" class="w3-bar-item w3-button w3-padding-16">ressource</a>
+        <a href="/publication" class="w3-bar-item w3-button w3-padding-16">publication</a>
+        <a href="/personne" class="w3-bar-item w3-button w3-padding-16">profil</a>
     </div>
 </div>
 <br>

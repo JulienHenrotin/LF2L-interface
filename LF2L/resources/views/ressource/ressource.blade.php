@@ -9,11 +9,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<body>
-<div class="w3-row-padding">
-<div class="w3-half">
+<body >
+@include('header')
+<div class="w3-row-padding ">
+<div >
 
-    <form  action="/ressource" id="personneForm" enctype="multipart/form-data" method="post">
+    <form  action="/ressource" class="w3-mobile" id="personneForm" enctype="multipart/form-data" method="post" style="padding-left: 20%;padding-right: 20%">
         {{ csrf_field() }}
 
 
@@ -34,7 +35,7 @@
             <p>Numéro de facture :</p>
         <p><input class="w3-input w3-border w3-round-large" type="text" name="num_facture"></p>
             <p>Type :</p>
-        <select id="type" onchange="affiche_role(value)">
+        <select id="type" class="w3-mobile" onchange="affiche_role(value)">
 
             <option></option>
             <option value="materiel_bureau">Materiel de bureau</option>
@@ -53,8 +54,8 @@
 </div>
 
 </div>
-
-
+@include('footer')
+</body>
 
 <script>
 function affiche_role(role) {

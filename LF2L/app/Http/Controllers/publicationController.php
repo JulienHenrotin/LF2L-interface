@@ -17,10 +17,24 @@ class publicationController extends Controller
         $publications_conference = \App\publication_conference::all();
         $etablissements = \App\etablissement::all();
 
-        return view('publication/publication',['publications' => $publications, 'prepublications' => $prepublications,
+        $personnes = \App\personne::all();
+        $i = 0;
+        $pattern_date = "#[0-9]{4}#";
+            foreach ($publications as $publication){
+
+            preg_match_all($pattern_date, $publication -> date_publication, $matches_date);
+            $dates[$i] = $matches_date[0][0];
+            $dates = array_unique($dates);
+            $i++;
+
+        }
+
+        arsort($dates);
+
+        return view('publication/publication2',['publications' => $publications, 'prepublications' => $prepublications,
             'rapports' => $rapports, 'articles_publication_presse' => $articles_publication_presse,
             'liste_hdr' => $liste_hdr, 'theses' => $theses, 'publications_conference' => $publications_conference,
-            'etablissements' => $etablissements]);
+            'etablissements' => $etablissements,"dates"=> $dates,'personnes'=>$personnes]);
 
     }
 }

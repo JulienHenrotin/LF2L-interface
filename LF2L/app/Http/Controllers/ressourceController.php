@@ -9,10 +9,10 @@ class ressourceController extends Controller
 {
     function reduction(){
         /////décrementation du de la ressource ($_POST["type"]) par la quantité selectionné ($_POST["nb"]) //////
-    $resources = \App\resources::all();
-        foreach ($resources as $resource) {
-            if ($_POST["type"] == $resource->type) {
-                $resource->increment('stock', -$_POST["nb"]);
+    $ressources = \App\ressources::all();
+        foreach ($ressources as $ressource) {
+            if ($_POST["type"] == $ressource->type) {
+                $ressource->increment('stock', -$_POST["nb"]);
                 return redirect('/ressource_liste');
             }
         }
@@ -25,16 +25,16 @@ class ressourceController extends Controller
 
     function  facture(){
         /////retourne l'intégralité des factures relative à une ressource ($_POST["type"])/////
-        $resources = \App\resources::all();
+        $ressources = \App\ressources::all();
         $facture = \App\facture_ressource::all();
         $fournisseurs = \App\fournisseur::all();
         $factures_contient = $factures = \App\facture_contient::all();
 
-        return view('ressource/facture',['factures_contient' => $factures_contient,'factures' => $facture,'fournisseurs' => $fournisseurs,'resources' => $resources, 'type' => $_POST["type"]]);
+        return view('ressource/facture',['factures_contient' => $factures_contient,'factures' => $facture,'fournisseurs' => $fournisseurs,'ressources' => $ressources, 'type' => $_POST["type"]]);
     }
     function liste(){
         ////ouvre la page de présentation des ressources/////
-        $ressources = \App\resources::all();
+        $ressources = \App\ressources::all();
 
         return view('ressource/ressource_liste',['ressources' => $ressources]);
     }
@@ -55,29 +55,29 @@ class ressourceController extends Controller
 
         /////ajoute une nouvelle ressource dans la BDD/////
         $ressource_existe = 0;
-        $resources = \App\resources::all();
-        foreach ($resources as $resource) {
+        $ressources = \App\ressources::all();
+        foreach ($ressources as $ressource) {
             /////si la ressource existe déja on augmente juste le stock /////
-            if ($_POST["nom"] == $resource -> type) {
+            if ($_POST["nom"] == $ressource -> type) {
                 $ressource_existe = 1;
-                $resource-> increment('stock',$_POST["quantite"]);
+                $ressource-> increment('stock',$_POST["quantite"]);
             }
         }
         if ($ressource_existe == 0) {
             /////sinon on ajoute la ressource dans la BDD/////
             $path = request('image')->store('img','public');
-            $new_resources = new \App\resources;
-            $new_resources->type = $_POST["nom"];
-            $new_resources->img_ressources = $path;
-            $new_resources->date_acquisition = $_POST["date"];
-            $new_resources->stock = $_POST["quantite"];
-            $new_resources->model = $_POST["model"];
-            $new_resources->save();
+            $new_ressources = new \App\ressources;
+            $new_ressources->type = $_POST["nom"];
+            $new_ressources->img_ressources = $path;
+            $new_ressources->date_acquisition = $_POST["date"];
+            $new_ressources->stock = $_POST["quantite"];
+            $new_ressources->model = $_POST["model"];
+            $new_ressources->save();
             request('image')->store('img','public');
 
 
             /////férification du type de la ressource/////
-            $resources = \App\resources::all();
+            $ressources = \App\ressources::all();
             echo $_POST["type"];
             if($_POST["type"] == 'outil_numerique'){
                 $type = new \App\outils_numeriques;
@@ -100,9 +100,9 @@ class ressourceController extends Controller
             }
 
 
-            foreach ($resources as $resource) {
-                if ($_POST["nom"] == $resource->type) {
-                    $type->id_ressources = $resource->id_ressources;
+            foreach ($ressources as $ressource) {
+                if ($_POST["nom"] == $ressource->type) {
+                    $type->id_ressources = $ressource->id_ressources;
                     $type->save();
                 }
             }
@@ -122,11 +122,11 @@ class ressourceController extends Controller
             $new_fournisseur->save();
         }
 
-        $resources = \App\resources::all();
+        $ressources = \App\ressources::all();
         $fournisseurs = \App\fournisseur::all();
 
         $new_facture = new \App\facture_ressource;
-        $new_facture->quantite_resources_facture = $_POST["quantite"];
+        $new_facture->quantite_ressources_facture = $_POST["quantite"];
         $new_facture->numero_facture = $_POST["num_facture"];
 
         foreach ($fournisseurs as $fournisseur) {
@@ -140,11 +140,11 @@ class ressourceController extends Controller
         $factures = \App\facture_ressource::all();
         foreach ($factures as $facture) {
             if ($_POST["num_facture"] == $facture->numero_facture) {
-                foreach ($resources as $resource) {
-                    if ($_POST["nom"] == $resource->type) {
+                foreach ($ressources as $ressource) {
+                    if ($_POST["nom"] == $ressource->type) {
                         $new_facture_contient = new \App\facture_contient;
                         $new_facture_contient-> id_facture = $facture->id_facture;
-                        $new_facture_contient-> id_ressources = $resource->id_ressources;
+                        $new_facture_contient-> id_ressources = $ressource->id_ressources;
                         $new_facture_contient->save();
                     }
                 }

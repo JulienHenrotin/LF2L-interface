@@ -9,3 +9,5 @@ class client extends Model
     protected $table='client';
 
 }
+
+

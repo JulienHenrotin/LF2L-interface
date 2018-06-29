@@ -6,11 +6,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <body >
 @include('header')
-<div style="padding-left: 5%">
+<input class="w3-input w3-border w3-padding" type="text" placeholder="Chercher une publication" id="myInput" onkeyup="recherche()" style="max-Width:70%;margin-left: 15%">
+
+<div id="liste" style="padding-left: 5%">
 <?php
         foreach ($publications as $publication){
-            echo "<div class='w3-panel w3-border-bottom w3-border-purple'>";
-            echo "<a href='https://hal.archives-ouvertes.fr/".$publication ->identifiant ."'target='_blank'>".$publication -> titre_article."</a><br>";
+            echo "<div class='w3-panel w3-border-bottom w3-border-purple div'>";
+            echo "<a href='https://hal.archives-ouvertes.fr/".$publication ->identifiant ."'target='_blank' class='p'>".$publication -> titre_article."</a><br>";
             //echo $publication -> domaine_article."<br>";
             echo $publication -> date_publication."<br>";
             echo $publication -> langue_article."<br>";
@@ -56,4 +58,23 @@
 </div>
 @include('footer')
 </body>
+<script>
+    function recherche() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("liste");
+        tr = table.getElementsByClassName('div');
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByClassName('p')[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 </html>
